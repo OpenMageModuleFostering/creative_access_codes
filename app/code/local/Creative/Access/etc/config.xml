@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Creative_Access>
+            <version>1.0.0</version>
+        </Creative_Access>
+    </modules>
+     
+    <global>
+        <helpers>
+            <creative_access>
+                <!-- This is where we define our helper directory -->
+                <class>Creative_Access_Helper</class>
+            </creative_access>
+        </helpers>
+                    
+        <blocks>
+            <creative_access>
+                <!-- Set a block definition and lookup directory -->
+                <class>Creative_Access_Block</class>
+            </creative_access>
+        </blocks>
+         
+        <models>
+            <creative_access>
+                <!-- This is where we define our model directory -->
+                <class>Creative_Access_Model</class>
+                <!-- Define a resource to create a custom table -->
+                <resourceModel>creative_access_mysql4</resourceModel>
+            </creative_access>
+             
+            <!-- Here's our resource model we'll use to create a database table -->
+            <creative_access_mysql4>
+                <class>Creative_Access_Model_Mysql4</class>
+                <entities>
+                    <!-- Let's define our table, we'll call it with the baz name, but the real table is foo_bar_baz -->
+                    <!-- After we define our entity, we can call it with our model by calling foo_bar/baz -->
+                    <code>
+                        <table>creative_access_code</table>
+                    </code>
+                </entities>
+            </creative_access_mysql4>
+        </models>
+         
+        <!-- And finally we define our resource setup script -->
+        <resources>
+            <creative_access_setup>
+                <setup>
+                    <module>Creative_Access</module>
+                </setup>
+            </creative_access_setup>
+        </resources>
+    </global>
+     
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <!-- This is how we load our Adminhtml controllers -->
+                    <modules>
+                        <Creative_Access before="Mage_Adminhtml">Creative_Access_Adminhtml</Creative_Access>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+     
+    <adminhtml>
+        <layout>
+            <updates>
+                <creative_access>
+                    <!--
+                    We again keep a nice naming convention and make our module upgrade proof by placing it in a separate folder
+                    - Since we are in the adminhtml node, this will look for the XML file in the app/design/adminhtml/default/default root folder
+                    -->
+                    <file>creative/access.xml</file>
+                </creative_access>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

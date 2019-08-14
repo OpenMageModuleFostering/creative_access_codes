@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+	<global>
+		<modules>
+                <signin_signup>
+                        <version>0.1.0</version>
+                </signin_signup>
+        </modules>
+	<blocks>
+            <signup>
+                <rewrite>
+		 <signup>Sign_Up_Block_up</signup>
+		</rewrite>
+            </signup>
+	 </blocks>
+
+        </global>
+	   <frontend>
+                <routers>
+                        <signup>
+                                <use>standard</use>
+                                <args>
+                                      <module>Signin_Signup</module>
+                                      <frontName>signup</frontName>
+                                </args>
+                        </signup>
+                </routers>
+		<layout>
+			<updates>
+				<signup>
+		   		      <file>signup.xml</file>
+				</signup>
+			</updates>
+       		</layout>
+        </frontend>
+</config>

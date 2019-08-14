@@ -1,0 +1,75 @@
+<?php 
+class Signin_Signup_IndexController extends Mage_Core_Controller_Front_Action
+{    
+ protected function _getSession()
+    {
+        return Mage::getSingleton('core/session');
+    }
+
+   public function indexAction()
+    {
+        $this->loadLayout();
+        $this->_initLayoutMessages('customer/session');
+        $this->_initLayoutMessages('catalog/session');
+
+        $this->getLayout()->getBlock('content')->append(
+            $this->getLayout()->createBlock('customer/account_dashboard')
+        );
+        $this->getLayout()->getBlock('head')->setTitle($this->__('My Account'));
+        $this->renderLayout();
+    }
+
+
+
+    /**
+     * Login post action
+     */
+    public function loginPostAction()
+    { 
+        Mage::getSingleton('core/session',array('name'=>'frontend'));   
+         $model = Mage::getModel('creative_access/code');
+        $collection = $model->getCollection();
+      
+        foreach($collection as $item){
+            $access_code=$item->getName();
+            $status=$item->getIsActive();
+             // echo '<pre>';print_r($access_code);print_r($status);
+        
+        
+       // $access_code='123456';
+        $session =Mage::getSingleton('core/session');
+        
+        $postaccess=$this->getRequest()->getParam('access');
+          // echo($postaccess).'<br/>';echo($access_code).'<br/>';echo($status).'<br/>';
+         
+        if($postaccess!=NULL)
+        {   
+            if(($postaccess==$access_code)&&($status=='Enabled'))
+             {  
+                $session->setloginaccesscode('login');  
+                $msg="success";
+                break;
+            
+             }else if(($postaccess==$access_code)&&($status =='Disabled'))
+             {                
+                $msg="error";
+                //$this->_redirectReferer();
+             }else if($postaccess!=$access_code)
+             {    
+                $msg="error";
+                //$this->_redirectReferer();
+             }
+            
+        }
+        else {
+                $msg="empty";
+            }
+        }
+            $res['msg']=$msg;
+            echo json_encode($res);
+            exit;
+            
+    
+    }
+}
+?>

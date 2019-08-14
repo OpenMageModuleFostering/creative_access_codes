@@ -1,0 +1,167 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $this->getLang() ?>" lang="<?php echo $this->getLang() ?>">
+<head>
+<?php echo $this->getChildHtml('head') ?>
+       <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>creative/css/access.css" />
+       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+</head>
+<body<?php echo $this->getBodyClass()?' class="'.$this->getBodyClass().'"':'' ?>>
+<?php echo $this->getChildHtml('after_body_start') ?>
+<div class="wrapper">
+    <?php echo $this->getChildHtml('global_notices') ?>
+    <div class="page">
+        <?php echo $this->getChildHtml('header') ?>
+        <div class="main-container col3-layout">
+            <div class="main">
+                 <div class="mainBox">
+                <?php echo $this->getChildHtml('breadcrumbs') ?>
+                <div class="col-wrapper">
+                    <div class="col-main">
+                                                    
+                  <?php $helper = Mage::helper("customer");
+                  $Reg_url = $helper->getRegisterUrl();
+                  $current_url=Mage::helper("core/url")->getCurrentUrl();
+                  $login_url= $helper->getLoginUrl();
+                  $forgoturl=$helper->getForgotPasswordUrl() ;
+                  $access_login=Mage::getSingleton('core/session')->getloginaccesscode();
+                  if($access_login!='login')
+                  //if((!(Mage::getSingleton('customer/session')->isLoggedIn()))&&($current_url !=$Reg_url)&&($current_url !=$login_url)&&($current_url !=$forgoturl))
+            {?>
+<script src="<?php echo $this->getSkinUrl(); ?>creative/js/ga.js" async="" type="text/javascript"></script>
+                                    <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>creative/js/a.js" charset="utf-8" async=""></script>
+                                    
+       <script type="text/javascript">
+        function submit_access(){ 
+            
+        document.getElementById('loader').style.display = 'block';
+        var access_code=jQuery("#access").val();
+   jQuery.ajax({
+                            url:"<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB);?>index.php/signup/index/loginPost/",
+                            type:"post",
+                            dataType:"json",
+                            data:({
+                                     access:access_code                                     
+                                 }),
+                                success:function(data)
+                                 {                                   
+                                     if(data.msg=='success')
+                                         {  
+                                             location.reload();
+                                         }else if(data.msg=='error'){
+                                             document.getElementById('loader').style.display = 'none';
+                                             document.getElementById('access_error').style.display = 'block';
+                                             jQuery("input#access").addClass("validation-failed");
+                                         }else if(data.msg=='empty'){
+                                             document.getElementById('loader').style.display = 'none';
+                                             document.getElementById('access_error').style.display = 'block';
+                                             jQuery("input#access").addClass("validation-failed");
+                                         }
+                                 }
+                        });}
+</script>
+                    <div class="block block-login">
+                        <div class="login-form-wrapper">
+                            <div class="login-logo">
+                                <a style="display:block; float:left; margin-top:5px; margin-right:10px;" href="<?php echo $this->getUrl('') ?>" target="_blank">
+                                    <img src="<?php echo $this->getSkinUrl('images/logo.gif'); ?>">
+                                </a>
+                            </div>
+                            <div class="new-users">
+                                    <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('access_pop_text')->toHtml() ?> 
+                                </div>
+
+                                <div class="registered-users">
+                                    <h1 style="margin-bottom:20px;">Access Website </h1>
+                                    
+                                    <label for="Access" class="required"  >Access Code</label>
+                                    <div class="input-box" style="margin-top:12px;padding-bottom:0px;">
+                                        <input name="access" id="access" class="input-text required-entry" title="Access Code" type="text">
+                                    </div>
+                                         <div id="access_error" class="validation-advice" style="display: none;"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('access_error_msg ')->toHtml() ?></div>
+                                   <button type="button" onclick="submit_access()" class="button" title="SIGN IN" name="send" id="send2"  style="margin-top:15px;float: left;"><span><span>SIGN IN</span></span></button>
+                                  <div id="loader" style="display: none;float: left;width: 25px;height: 20px;margin-top: 5px;"> <img src="<?php echo $this->getSkinUrl('images/loadingr.gif');?>"></div>
+                                </div>
+                           
+                             
+                            <script type="text/javascript">
+                                //<![CDATA[
+                                var dataForm = new VarienForm('login-form', true);
+                                //]]>
+                            </script>
+                            <div class="clearb"></div>
+                        </div>
+                    </div>
+
+<?php } ?>
+
+                                <div class="std"><div class="slideshow">
+                                      <script type="text/javascript">
+                                            //<CDATA[[
+                                            jQuery(document).ready(function($){
+                                                jQuery('#featured11460730161356421778').cycle({
+                                                    fx:     'fade',
+                                                    timeout: 6000,
+                                                    speed:  1000, 
+                                                    next:   '#next11460730161356421778', 
+                                                    prev:   '#prev11460730161356421778',
+                                                    pause: 1,
+                                                    divId: '11460730161356421778',
+                                                    readmoreImg:'View Details',
+                                                    theme:'theme2',
+                                                    linktarget:'_self',
+                                                    linkcaption:1,
+                                                    autoPlay:1		});
+                                            });
+                                            //]]>
+                                        </script>
+                        <?php echo $this->getChildHtml('global_messages') ?>
+                    <?php echo $this->getChildHtml('content') ?>
+                                    </div>
+                                </div> 
+                            
+                   
+                    </div>
+                    <div class="col-left sidebar"><?php echo $this->getChildHtml('left') ?></div>
+                </div>
+                <div class="col-right sidebar"><?php echo $this->getChildHtml('right') ?></div>
+            </div>
+                </div>
+        </div>
+        <?php echo $this->getChildHtml('footer') ?>
+        <?php echo $this->getChildHtml('before_body_end') ?>
+    </div>
+</div>
+<?php echo $this->getAbsoluteFooter() ?>
+</body>
+</html>

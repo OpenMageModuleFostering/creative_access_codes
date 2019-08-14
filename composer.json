@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Creative_Access_Codes",
+    "type": "magento-module",
+    "license": "Open-Software-License-(OSL)",
+    "homepage": "",
+    "description": "'Creative Access Code' is a module which enables a user to access the site if he has the correct access code.",
+    "authors": [
+    {
+        "name": "SydneyDesign",
+        "email": "scott@creative-web-designer.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

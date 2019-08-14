@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+	<config>
+	         <modules>
+	                <Signin_Signup>
+	                        <active>true</active>
+	                        <codePool>local</codePool>
+	                </Signin_Signup>
+	         </modules>
+	</config>
