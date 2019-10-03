@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Creative_Access_Codes",
+    "name": "openmage-module-fostering\/creative_access_codes",
     "type": "magento-module",
-    "license": "Open-Software-License-(OSL)",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "'Creative Access Code' is a module which enables a user to access the site if he has the correct access code.",
     "authors": [
